@@ -20,7 +20,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package Week2.linkedlists;
+package Week2.SamitSandhu_COMP254Lab1;
 
 /**
  * A basic doubly linked list implementation.
@@ -36,6 +36,8 @@ public class DoublyLinkedList<E> {
     /**
      * Node of a doubly linked list, which stores a reference to its
      * element and to both the previous and next node in the list.
+     * We make it static because it needs to exist independently in memory and not associated to any DLL.
+     * We make it private to encapsulate it to only this class. Meaning only in constructing a DLL a node can be made and manipulated.
      */
     private static class Node<E> {
 
@@ -272,7 +274,10 @@ public class DoublyLinkedList<E> {
         return sb.toString();
     }
 
-    //import into Driver for exercise 1
+    /**
+     *
+     * Concat two doubly linked lists - Exercise 1
+     */
     public void concat(DoublyLinkedList<E> L, DoublyLinkedList<E> M) {
         if (L.isEmpty() || M.isEmpty()) return;
 
@@ -293,14 +298,51 @@ public class DoublyLinkedList<E> {
         this.size = L.size + M.size;
     }
 
+    /**
+     *
+     * Swap two nodes of 'this' DLL object
+     */
+    public void swapNodes(Node<E> node1, Node<E> node2) {
+        if (node1 == node2) return; // Check if they are the same node
 
+        //variables of Node type to hold the previous nodes of each node that we are trying to swap - what node comes before each node
+        //another variable to hold the current node that we are looking at - to see if that's the node that we want to use - starting with header
+        Node<E> prev1 = null, prev2 = null, curr = header;
+
+        // Traverse to find the nodes before node1 and node2
+        // if curr is null - means end of list, and we stop only when prev1 and prev2 have been found
+        while (curr != null && (prev1 == null || prev2 == null)) {
+            //get the next node of the current and compare to the nodes provided
+            if (curr.getNext() == node1) prev1 = curr;
+            if (curr.getNext() == node2) prev2 = curr;
+            //if it makes it here - current node wasn't what we are looking for - go to next one and repeat until we find the previous nodes of each node were trying to swap
+            curr = curr.getNext();
+        }
+
+        // Update predecessor of node1 - set its next to node2
+        if (prev1 != null) prev1.setNext(node2);
+        //empty list with only two nodes - header and trailer
+        else header = node2;
+
+        // Update predecessor of node2 - set its next to node1
+        if (prev2 != null) prev2.setNext(node1);
+        else header = node1;
+
+        // Swap the 'next' pointers of node1 and node2
+        // use a temporary holder var to hold one of the nodes so we still have access to it
+        Node<E> temp = node1.getNext();
+        node1.setNext(node2.getNext());
+        node2.setNext(temp);
+    }
+    /**
+     * Assignment One Driver
+     *
+     */
 //main method
   public static void main(String[] args)
   {
 
-      /**
-       * EXERCISE ONE: CONCAT TWO DLL's
-       */
+      //EXERCISE ONE: CONCAT TWO DLL's
       //create and populate a doubly linked list
 	  DoublyLinkedList<String> L = new DoublyLinkedList<String>();
 	  L.addFirst("A");
@@ -324,7 +366,29 @@ public class DoublyLinkedList<E> {
       System.out.println(M);
       System.out.println(M.first());
 
+      //Empty doubly list
+      DoublyLinkedList<String> newList = new DoublyLinkedList<String>();
+      System.out.println(newList);
 
-	  //
+      //Concat
+      newList.concat(L, M);
+      System.out.println(newList);
+
+      //Swap B with E and vice versa.
+      Node<String> B = newList.header.getNext().getNext(); //third node in DLL ('B')
+      Node<String> E = newList.trailer.getPrev().getPrev(); //second last node
+
+      System.out.println("Swapping - Node 1:" + B + " Node 2:" + E);
+
+      newList.swapNodes(E, B);
+      System.out.println(newList);
+
+
+
+
+
+
+
+      //
   }
 } //----------- end of DoublyLinkedList class -----------
