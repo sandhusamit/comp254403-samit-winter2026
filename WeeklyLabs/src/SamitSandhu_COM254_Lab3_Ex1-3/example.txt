@@ -1,0 +1,1 @@
+Example.txt file to use with exercise 3 for lab3
