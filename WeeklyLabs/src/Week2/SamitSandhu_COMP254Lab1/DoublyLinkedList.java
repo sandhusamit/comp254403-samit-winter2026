@@ -334,6 +334,42 @@ public class DoublyLinkedList<E> {
         node1.setNext(node2.getNext());
         node2.setNext(temp);
     }
+    // Utility: builds list from array
+    public static DoublyLinkedList<Integer> fromArray(int[] a) {
+        DoublyLinkedList<Integer> list = new DoublyLinkedList<>();
+
+        for (int x : a) {
+            list.addLast(x);
+        }
+        return list;
+    }
+
+    public void reverse() {
+        if (isEmpty()) return;
+
+
+        Node walk = this.header.getNext();;
+        Node prevNode = this.trailer;
+
+        while (walk != this.trailer)
+        {
+            Node nextNode = walk.getNext();
+
+            walk.setPrev(nextNode);
+            walk.setNext(prevNode);
+//            prevNode.setPrev(walk); //might be redundant -- double check.
+
+            prevNode = walk;
+            walk = nextNode;
+
+
+        }
+        prevNode.setPrev(this.header);
+        this.header.setNext(prevNode);
+    }
+
+
+
     /**
      * Assignment One Driver
      *
@@ -382,6 +418,25 @@ public class DoublyLinkedList<E> {
 
       newList.swapNodes(E, B);
       System.out.println(newList);
+
+
+      int[] a = {1, 2, 5, 4, 1, 5};
+
+      DoublyLinkedList newDL = fromArray(a);
+      System.out.println(newDL);
+
+      Node<Integer> first = newDL.header.getNext();
+      Node<Integer> last = newDL.trailer.getPrev();
+      System.out.println("First Element: " + first.element + " " + "Last Element: " + last.element);
+
+
+
+      System.out.print("Reverse Call");
+      System.out.println(newDL);
+
+      newDL.reverse();
+      System.out.println(newDL);
+
 
 
 

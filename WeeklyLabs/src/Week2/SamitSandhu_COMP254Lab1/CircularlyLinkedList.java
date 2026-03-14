@@ -201,6 +201,43 @@ public class CircularlyLinkedList<E> {
       return clonedList;
   }
 
+  public void insertAfter(E key, E data)
+  {
+    Node newData = new Node(data, null);
+
+    //traverse through the list to find key
+    Node walk = this.tail.getNext();
+    Node keyNode = null;
+    Node keyNodeNext = null;
+    while (walk != this.tail)
+    {
+      if (walk.element == key)
+      {
+        keyNode = walk;
+        // placeholder for that key's next
+        keyNodeNext = keyNode.getNext();
+        break;
+      }
+      else
+        walk = walk.getNext();
+    }
+    if (walk == this.tail)
+      System.out.println("The key isnt inside this list.");
+    else
+    {
+      //set that key's next to newData
+      keyNode.setNext(newData);
+      //set newData's node to placeholder
+      newData.setNext(keyNodeNext);
+    }
+
+
+  }
+  public static int josephus(int n, int k) {
+    // TODO
+
+  }
+
 
     //main method
   public static void main(String[] args)
@@ -226,7 +263,11 @@ public class CircularlyLinkedList<E> {
       System.out.println("Original:" + circularList);
       System.out.println("Cloned:" + clonedCL);
 
+      clonedCL.insertAfter("ATL", "NYC");
+      System.out.println("Cloned Insert After:" + clonedCL);
 
-      //
+
+
+    //
   }
 }

@@ -20,7 +20,12 @@ public class SamitSandhu_COMP254Lab3_Ex1 {
 
     public static int recursiveProduct(int m, int n) {
         if (m == 0)
+        {
+            System.out.println(n + "+ " + m);
             return 0;
+
+        }
+        System.out.println(n + "+ " + m);
         return n + recursiveProduct(m - 1, n);
     }
 }

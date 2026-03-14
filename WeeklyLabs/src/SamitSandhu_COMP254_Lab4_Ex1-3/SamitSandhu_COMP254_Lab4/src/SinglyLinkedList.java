@@ -20,7 +20,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package Week2.SinglyLinkedList;
+
 /**
  * A basic singly linked list implementation.
  *
@@ -35,7 +35,7 @@ public class SinglyLinkedList<E> implements Cloneable {
    * element and to the subsequent node in the list (or null if this
    * is the last node).
    */
-  public static class Node<E> {
+  private static class Node<E> {
 
     /** The element stored at this node */
     private E element;            // reference to the element stored at this node
@@ -73,7 +73,6 @@ public class SinglyLinkedList<E> implements Cloneable {
      * @param n    the node that should follow this one
      */
     public void setNext(Node<E> n) { next = n; }
-    
   } //----------- end of nested Node class -----------
 
   // instance variables of the SinglyLinkedList
@@ -109,10 +108,6 @@ public class SinglyLinkedList<E> implements Cloneable {
   public E first() {             // returns (but does not remove) the first element
     if (isEmpty()) return null;
     return head.getElement();
-  }
-  public Node<E> firstNode() {             // returns (but does not remove) the first element
-    if (isEmpty()) return null;
-    return this.head;
   }
 
   /**
@@ -223,85 +218,25 @@ public class SinglyLinkedList<E> implements Cloneable {
     sb.append(")");
     return sb.toString();
   }
-
-  public boolean hasCycle() {
-    if(this.head.getNext() == null)
-      return false;
-
-    Node hare = this.head;
-    Node turtoise = this.head;
-
-    //If hare meets turtoise -> return true;
-    while (hare != null && hare.next != null)
-    {
-      hare = hare.next.next;
-      turtoise = turtoise.next;
-
-      if (hare == turtoise)
-        return true;
+  public void concatenate(SinglyLinkedList<E> other) {
+    if (other.isEmpty()) {
+      return;
     }
 
-    return false;
-
-  }
-
-  public void createCycle() {
-    Node lastNode;
-    Node secondLast = null;
-    Node walk = this.head.getNext();
-    while (walk.getNext() != this.tail)
-    {
-      if (walk.getNext().getNext() == this.tail)
-        secondLast = walk;
-      walk = walk.getNext();
+    if (this.isEmpty()) {
+      this.head = other.head;
+      this.tail = other.tail;
+      this.size = other.size;
+    } else {
+      this.tail.setNext(other.head);
+      this.tail = other.tail;
+      this.size += other.size;
     }
-    lastNode = walk;
-    if (secondLast != null)
-      lastNode.setNext(secondLast);
 
+    other.head = null;
+    other.tail = null;
+    other.size = 0;
   }
-  public boolean contains(Node head, int key) {
-    if (head == this.tail)
-      return false;
-    if ((Integer) head.getElement() == key)
-    {
-      return true;
-    }
-    return contains(head.getNext(), key);
-
-  }
-
-
-  //main method
-  public static void main(String[] args)
-  {
-	  
-//	  SinglyLinkedList<String> list = new SinglyLinkedList<String>();
-//	  list.addFirst("MSP");
-//	  list.addLast("ATL");
-//	  list.addLast("BOS");
-//	  //
-//	  list.addFirst("LAX");
-//	  System.out.println(list);
-//
-//
-//	  //
-//
-//      System.out.println(list.hasCycle());
-//      list.createCycle();
-//      System.out.println(list.hasCycle());
-
-
-      SinglyLinkedList<Integer> list2 = new SinglyLinkedList<>();
-
-      list2.addFirst(1);
-      list2.addLast(2);
-      list2.addLast(5);
-
-    System.out.println(list2.contains(list2.head,2));  // true
-
-
-
-  }
-  
 }
+
+
