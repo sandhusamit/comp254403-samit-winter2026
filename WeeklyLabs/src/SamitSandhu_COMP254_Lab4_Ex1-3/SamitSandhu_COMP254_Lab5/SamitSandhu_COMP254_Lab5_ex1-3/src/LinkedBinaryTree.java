@@ -397,9 +397,12 @@ public class LinkedBinaryTree<E> extends AbstractBinaryTree<E> {
   public int printSubtreeHeights(Position<E> p) {
     if (p == null) return -1;
 
+    // used once the recursive reaches a leaf -> sets height of node to 0
     int leftHeight = -1;
     int rightHeight = -1;
 
+
+    //DFS - post order left->right->current
     if (left(p) != null) {
       leftHeight = printSubtreeHeights(left(p));
     }
