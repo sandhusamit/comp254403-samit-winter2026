@@ -84,7 +84,7 @@ public class LinkedQueue<E> implements Queue<E> {
   public E last() { return list.last();}
 
 
-
+// INCORRECT -- still running in O(n)
   public void concatenateOn(LinkedQueue<E> Q2)
   {
     if (Q2.isEmpty())
@@ -104,12 +104,20 @@ public class LinkedQueue<E> implements Queue<E> {
 
 
   }
-  public void concatenate(LinkedQueue<E> Q2) {
+  public void concatenateSlow(LinkedQueue<E> Q2) {
     System.out.println("Concatenating Que: " + Q2.toString());
     System.out.println("Current Que: " + this.toString());
     this.list.concatenate(Q2.list);
     System.out.println("Emptied: " + Q2.toString());
     System.out.println("Added: " + this.toString());
+  }
+
+  public LinkedQueue<E> concatenate(LinkedQueue<E> Q2)
+  {
+
+    list.concatenate(Q2.list);
+    LinkedQueue<E> emptyQ = new LinkedQueue<>();
+    return emptyQ;
   }
 }
 
