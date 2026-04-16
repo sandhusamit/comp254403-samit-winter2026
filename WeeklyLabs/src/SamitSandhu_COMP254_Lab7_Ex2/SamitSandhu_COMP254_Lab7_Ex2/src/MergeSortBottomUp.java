@@ -62,10 +62,9 @@ public class MergeSortBottomUp {
     }
 
     public static void main(String[] args) {
-        int[] S = new int[]{85, 24, 63, 45, 17, 31, 96, 50};
+        int[] S = new int[]{85, 24, 63, 45};
 
-        IterateArray(S);
-
+        iterateArray(S);
 
         LinkedQueue<Integer> MyQue = new LinkedQueue<>();
         for (int i = 0; i < S.length; i++) {
@@ -74,7 +73,7 @@ public class MergeSortBottomUp {
 
         MyQue = bottomUpMergeSort(MyQue);
 
-        System.out.println(MyQue.size());
+        System.out.println("\nQue Size: " + MyQue.size());
         iterateQueue(MyQue);
 
         //Use the implementation of Merge-Sort with Queues to sort a queue of String objects
@@ -82,10 +81,12 @@ public class MergeSortBottomUp {
 
 
     }
-
-    public static void IterateArray(int[] arr) {
-        for (int i = 0; i< arr.length; i++) {
-            System.out.print(arr[i]+ ",");
+    public static void iterateArray(int[] arr) {
+        for (int i = 0; i < arr.length; i++) {
+            System.out.print(arr[i]);
+            if (i < arr.length - 1) {
+                System.out.print(",");
+            }
         }
     }
 
